@@ -1,0 +1,67 @@
+<?php $_shouldextend[1]=1; ?>
+<?php $this->startSection('content'); ?>
+ <nav class="navbar navbar-expand-lg navbar-light bg-light">
+ <div class="container-fluid">
+ <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+ aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+ <span class="navbar-toggler-icon"></span>
+ </button>
+ <div class="collapse navbar-collapse" id="navbarSupportedContent">
+ <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+ <li class="nav-item">
+ <a class="nav-link active" aria-current="page" href="<?= BASE_URL . 'mon-hoc' ?>">Môn học</a>
+ </li>
+ <li class="nav-item">
+ <a class="nav-link"
+ href="<?= BASE_URL . 'question/list?id=' . $quiz_id . '&sub_id=' . $sub_id ?>">Ds Question</a>
+ </li>
+
+ <li class="nav-item">
+ <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+ </li>
+ </ul>
+ </div>
+ </div>
+ </nav>
+
+ <div class="list-subjects">
+
+ <table class="table">
+ <thead>
+ <tr>
+ <th scope="col">Stt</th>
+ <th scope="col">Content</th>
+ <th scope="col">Is_correct</th>
+ <?php if (isset($_SESSION['user_role_id'])) { ?>
+ <th><a
+ href="<?= BASE_URL . 'answer/add?id=' . $question_id . '&sub_id=' . $sub_id . '&quiz_id=' . $quiz_id ?>">Tạo
+ mới</a></th>
+ <?php } ?>
+ </tr>
+ </thead>
+ <tbody>
+ <?php
+ foreach ($listAnswerQuestion as $key => $value) { ?>
+ <tr>
+ <td><?= $key + 1 ?></td>
+ <td><?= $value->content ?></td>
+ <?php if($value->is_correct == 0){ ?>
+ <td>Đúng</td>
+ <?php }else{?>
+ <td>Sai</td>
+ <?php }?>
+ <td><a
+ href="<?= BASE_URL . 'answer/edit?question_id=' . $question_id . '&id=' . $value->id . '&sub_id=' . $sub_id . '&quiz_id=' . $quiz_id ?>">Sửa</a>
+ </td>
+ <td><a
+ href="<?= BASE_URL . 'answer/remove?question_id=' . $question_id . '&id=' . $value->id . '&sub_id=' . $sub_id . '&quiz_id=' . $quiz_id ?>">Xóa</a>
+ </td>
+ </tr>
+ <?php } ?>
+ </tbody>
+
+ </table>
+ </div>
+<?php $this->stopSection(); ?>
+
+<?php if (isset($_shouldextend[1])) { echo $this->runChild('layout.main'); } ?>
